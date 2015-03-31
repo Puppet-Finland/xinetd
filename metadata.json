@@ -1,0 +1,13 @@
+{
+  "name": "puppetfinland-xinetd",
+  "version": "0.2.0",
+  "author": "Puppet-Finland team",
+  "license": "BSD license",
+  "summary": "Setup xinetd",
+  "source": "https://github.com/Puppet-Finland/xinetd.git",
+  "project_page": "https://github.com/Puppet-Finland/xinetd",
+  "dependencies": [
+    { "name": "puppetfinland/monit", "version_requirement": ">= 0.5.0" },
+    { "name": "puppetfinland/packetfilter", "version_requirement": ">= 0.5.0" }
+  ]
+}

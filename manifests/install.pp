@@ -3,12 +3,16 @@
 #
 # Install xinetd
 #
-class xinetd::install {
+class xinetd::install
+(
+    $ensure
+)
+{
 
     include xinetd::params
 
     package { 'xinetd-xinetd':
         name => "${::xinetd::params::package_name}",
-        ensure => installed,
+        ensure => $ensure,
     }
 }

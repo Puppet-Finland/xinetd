@@ -11,15 +11,17 @@ class xinetd::service
 
     include xinetd::params
 
-    $enable_service = $ensure ? {
-        'present' => true,
-        'absent' => false,
+    if $ensure == 'present' {
+        service { 'xinetd':
+            name => "${::xinetd::params::service_name}",
+            enable => true,
+            hasstatus => "${::xinetd::params::service_hasstatus}", 
+            require => Class['xinetd::install'],
+        }
+    } elsif $ensure == 'absent' {
+        # Do nothing
+    } else {
+        fail("Invalid value $ensure for parameter ensure")
     }
 
-    service { 'xinetd':
-        name => "${::xinetd::params::service_name}",
-        enable => $enable_service,
-        hasstatus => "${::xinetd::params::service_hasstatus}", 
-        require => Class['xinetd::install'],
-    }
 }

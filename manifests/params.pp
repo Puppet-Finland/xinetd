@@ -37,6 +37,14 @@ class xinetd::params {
             $service_start = "/usr/sbin/service $service_name start"
             $service_stop = "/usr/sbin/service $service_name stop"
         }
+        FreeBSD: {
+            $package_name = 'xinetd'
+            $service_name = 'xinetd'
+            $service_hasstatus = true
+            $pidfile = '/var/run/xinetd.pid'
+            $service_start = "/usr/local/etc/rc.d/${service_name} start"
+            $service_stop = "/usr/local/etc/rc.d/${service_name} stop"
+        }
         default: {
             fail("Unsupported operatingsystem: ${::osfamily}")
         }

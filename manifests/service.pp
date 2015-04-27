@@ -6,22 +6,21 @@
 class xinetd::service
 (
     $ensure
-)
-{
 
-    include xinetd::params
+) inherits xinetd::params
+{
 
     if $ensure == 'present' {
         service { 'xinetd':
-            name => "${::xinetd::params::service_name}",
-            enable => true,
-            hasstatus => "${::xinetd::params::service_hasstatus}", 
-            require => Class['xinetd::install'],
+            name      => $::xinetd::params::service_name,
+            enable    => true,
+            hasstatus => $::xinetd::params::service_hasstatus,
+            require   => Class['xinetd::install'],
         }
     } elsif $ensure == 'absent' {
         # Do nothing
     } else {
-        fail("Invalid value $ensure for parameter ensure")
+        fail("Invalid value ${ensure} for parameter ensure")
     }
 
 }

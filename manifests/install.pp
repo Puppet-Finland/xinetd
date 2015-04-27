@@ -6,13 +6,12 @@
 class xinetd::install
 (
     $ensure
-)
+
+) inherits xinetd::params
 {
 
-    include xinetd::params
-
     package { 'xinetd-xinetd':
-        name => "${::xinetd::params::package_name}",
         ensure => $ensure,
+        name   => $::xinetd::params::package_name,
     }
 }

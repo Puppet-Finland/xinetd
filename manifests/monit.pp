@@ -7,12 +7,11 @@ class xinetd::monit
 (
     $ensure,
     $monitor_email
-)
-{
-    include xinetd::params
 
+) inherits xinetd::params
+{
     monit::fragment { 'xinetd-xinetd.monit':
-        status => $ensure,
+        ensure     => $ensure,
         modulename => 'xinetd',
     }
 }

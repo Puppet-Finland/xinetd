@@ -26,17 +26,17 @@ class xinetd
     $monitor_email = $::servermonitor
 )
 {
-    class { 'xinetd::install':
+    class { '::xinetd::install':
         ensure => $ensure,
     }
 
-    class { 'xinetd::service':
+    class { '::xinetd::service':
         ensure => $ensure,
     }
 
     if tagged('monit') {
-        class { 'xinetd::monit':
-            ensure => $ensure,
+        class { '::xinetd::monit':
+            ensure        => $ensure,
             monitor_email => $monitor_email,
         }
     }

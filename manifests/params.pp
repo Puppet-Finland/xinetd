@@ -5,6 +5,8 @@
 #
 class xinetd::params {
 
+    include ::os::params
+
     case $::osfamily {
         'RedHat': {
             $package_name = 'xinetd'
@@ -12,14 +14,6 @@ class xinetd::params {
             $service_name = 'xinetd'
             $service_hasstatus = true
             $pidfile = '/var/run/xinetd.pid'
- 
-            if $::operatingsystem == 'Fedora' {
-                $service_start = "/usr/bin/systemctl start ${service_name}.service"
-                $service_stop = "/usr/bin/systemctl stop ${service_name}.service"
-            } else {
-                $service_start = "/sbin/service $service_name start"
-                $service_stop = "/sbin/service $service_name stop"
-            }
         }
         'Debian': {
             $package_name = 'xinetd'
@@ -34,19 +28,20 @@ class xinetd::params {
             }
 
             $pidfile = '/var/run/xinetd.pid'
-            $service_start = "/usr/sbin/service $service_name start"
-            $service_stop = "/usr/sbin/service $service_name stop"
         }
-        FreeBSD: {
+        'FreeBSD': {
             $package_name = 'xinetd'
             $service_name = 'xinetd'
             $service_hasstatus = true
             $pidfile = '/var/run/xinetd.pid'
-            $service_start = "/usr/local/etc/rc.d/${service_name} start"
-            $service_stop = "/usr/local/etc/rc.d/${service_name} stop"
         }
         default: {
             fail("Unsupported operatingsystem: ${::osfamily}")
         }
     }
+
+    $service_start = "${::os::params::service_cmd} ${service_name} start"
+    $service_stop = "${::os::params::service_cmd} ${service_name} stop"
+
+
 }
